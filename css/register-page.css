@@ -1,0 +1,7 @@
+.chk-box-container {
+    display: flex;
+}
+
+li {
+    display: block;
+}

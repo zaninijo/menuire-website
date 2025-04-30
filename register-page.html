@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar conta do Menuire</title>
+    <script type="module" src="src/register-page.ts"></script>
+    <link rel="stylesheet" href="css/register-page.css">
+</head>
+<body>
+    <button onclick="window.location.href = '/'">Voltar</button> <br>
+    <input id="email-input" placeholder="E-mail" type="email">
+    <input id="password-input" placeholder="Senha" type="password">
+    <input id="password-confirm" placeholder="Confirmar senha" type="password">
+    <div id="password-check">
+        <p>Sua senha precisa ter:</p>
+        <ul>
+            <li id="length">No mínimo 8 caracteres</li>
+            <li id="uppercase">Letra maiúscula</li>
+            <li id="lowercase">Letra minúscula</li>
+            <li id="number">Um número</li>
+            <li id="symbol">Um símbolo (!@#$...)</li>
+            <li id="confirm">As senhas não coincidem</li>
+        </ul>
+    </div>
+    <div class="chk-box-container">
+        <input type="checkbox" id="show-password"> <p>Mostrar senha</p>
+    </div>
+    <p id="error-message"></p>
+    <div class="chk-box-container">
+        <input id="keep-connected" type="checkbox"> <p>Continuar conectado?</p>
+    </div>
+    <button id="submit-login">Criar conta</button>
+</body>
+</html>

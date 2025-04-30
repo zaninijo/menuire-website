@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de menus</title>
+    <script type="module" src="src/menu-editor.ts"></script>
+    <script type="module" src="src/menu-builder.ts"></script>
+    <link rel="stylesheet" href="css/menu-editor.css">
+</head>
+<body>
+    
+    <div id="loading-screen" style="
+        background-color: rgb(92, 92, 92);
+        position: fixed;
+        height: 101vh;
+        width: 100vw;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 50;
+        align-content: center;
+        text-align: center;
+    ">
+        <h2>Estamos carregando o seu menu.</h2>
+        <p>por favor coloca uma bolinha de carregamento aqui ao invés desse texto. valeu!!</p>
+    </div>
+
+    <button id="go-back">Voltar</button>
+    <label for="theme-selector">Seletor de tema</label>
+    <select id="theme-selector"></select>
+
+    <button id="share-menu">Compartilhar o menu</button>
+    <button id="save-changes">Salvar mudanças</button>
+
+    <!-- PARTE PRINCIPAL FICA AQUI DENTRO DESSE CONTAINER -->
+    <div class="menu-container"></div> 
+
+    <div class="modal share-container">
+        <canvas class="qr-code"></canvas>
+        <button class="download-qr">Baixar QR-Code</button>
+        <input class="link-box" type="text" value="" readonly>
+
+        <button class="confirm">Ok</button>
+    </div>
+
+    <div class="edit-buttons edit-item">
+        <button class="up">Mover para cima</button>
+        <button class="down">Mover para baixo</button>
+        <button class="edit">Editar</button>
+        <button class="add">Adicionar elemento</button>
+    </div>
+    <div class="edit-buttons edit-separator">
+        <button class="up">Mover para cima</button>
+        <button class="down">Mover para baixo</button>
+        <button class="edit">Editar</button>
+        <button class="add">Adicionar elemento</button>
+    </div>
+    <div class="edit-buttons edit-title">
+        <button class="edit">Editar</button>
+        <button class="add">Adicionar elemento</button>
+    </div>
+
+    <div class="modal type-select">
+        <p>Qual tipo de elemento você deseja criar?</p>
+        <button class="add-item">Item do menu</button>
+        <button class="add-separator">Separador</button>
+    </div>
+
+    <div class="modal errorbox">
+        <h4>Ocorreu um erro.</h4>
+        <p class="error-message"></p>
+        <button class="confirm">Ok</button>
+    </div>
+
+    <div class="modal editbox item-editbox">
+        <div>
+            Nome: <input type="text" class="name">
+        </div>
+        <div>
+            Descrição: <input type="text" class="description">
+        </div>
+        <div>
+            Preço: <input type="text" inputmode="numeric" pattern="[0-9]*" class="price">
+        </div>
+        <div>
+            Imagem: <input type="file" accept="image/png, image/jpeg, image/jpg, image/webp" class="image">
+        </div>
+        <button class="delete">Deletar item do menu</button>
+        <button class="confirm">Ok</button> <button class="cancel">Cancelar</button>
+        <p>Ao alterar a imagem do item, as mudanças no menu serão salvas automaticamente.</p>
+    </div>
+    <div class="modal editbox separator-editbox">
+        <div>
+            Nome: <input type="text" class="name">
+        </div>
+        <div>
+            Sub: <input type="checkbox" class="sub-check">
+        </div>
+        <button class="delete">Deletar separador</button>
+        <button class="confirm">Ok</button> <button class="cancel">Cancelar</button>
+    </div>
+    <div class="modal editbox title-editbox">
+        <p><strong>Atenção:</strong> ao editar o título do menu, o QR-Code e link atuais da página serão atualizados</p>
+        Título: <input type="text" class="title">
+        <button class="confirm">Ok</button> <button class="cancel">Cancelar</button>
+    </div>
+    <div class="modal confirmbox">
+        <p>Você tem certeza que deseja fazer isso?</p>
+        <button class="confirm">Sim</button> <button class="cancel">Não</button>
+    </div>
+</body>
+</html>

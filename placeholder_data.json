@@ -1,0 +1,73 @@
+{
+    "id": 1,
+    "owner": 1001,
+    "title": "Menu Especial de Comidas",
+    "theme": "barebone",
+    "items": [
+        {
+            "name": "Hambúrguer Clássico",
+            "description": "Pão de brioche, carne suculenta, queijo derretido, alface e tomate.",
+            "price": 24.90,
+            "imageId": "example"
+        },
+        {
+            "name": "Pizza de Pepperoni",
+            "description": "Massa crocante, molho de tomate caseiro, queijo mussarela e fatias de pepperoni.",
+            "price": 49.90,
+            "imageId": "example"
+        },
+        {
+            "name": "Sushi Combo",
+            "description": "12 peças de sushi com salmão, atum e cream cheese.",
+            "price": 39.90,
+            "imageId": "example"
+        },
+        {
+            "name": "Taco Mexicano",
+            "description": "Tortilha de milho recheada com carne temperada, feijão, queijo e molho picante.",
+            "price": 19.90,
+            "imageId": "example"
+        },
+        {
+            "name": "Salada Caesar",
+            "description": "Alface fresca, frango grelhado, croutons crocantes e molho Caesar.",
+            "price": 29.90,
+            "imageId": "example"
+        },
+        {
+            "name": "Spaghetti à Bolonhesa",
+            "description": "Massa al dente com molho de tomate artesanal e carne moída temperada.",
+            "price": 34.90,
+            "imageId": "example"
+        },
+        {
+            "name": "Sorvete de Chocolate",
+            "description": "Sorvete cremoso de chocolate belga com pedaços de brownie.",
+            "price": 14.90,
+            "imageId": "example"
+        },
+        {
+            "name": "Café Expresso",
+            "description": "Café forte e encorpado, preparado com grãos selecionados.",
+            "price": 9.90,
+            "imageId": "example"
+        }
+    ],
+    "separators": [
+        {
+            "categoryName": "Pratos Principais",
+            "sub": false,
+            "position": 0
+        },
+        {
+            "categoryName": "Sobremesas",
+            "sub": false,
+            "position": 4
+        },
+        {
+            "categoryName": "Bebidas",
+            "sub": true,
+            "position": 7
+        }
+    ]
+}

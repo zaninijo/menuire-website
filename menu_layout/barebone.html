@@ -1,0 +1,126 @@
+<!--
+Esse documento é a base para construir menus. É só seguir as regrinhas que eu vou escrever aqui.
+Lembrando que o design de cardápios tem que ser voltado ao uso em smartphones
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%title%</title>
+
+    <style> /* O Estilo tem que ser interno, junto com o documento HTML. Pode mexer a vontade aqui. */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            padding: 15px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 10px;
+        }
+        
+        .item-list {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .separator {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background-color: #00d9ff;
+            text-align: center;
+        }
+
+        .sub-separator {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background-color: #009cb8;
+            text-align: center;
+        }
+
+        .item-card {
+            background-color: #cfcfcf;
+            border: 1px black;
+            padding: 5px;
+            margin-bottom: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5px;
+            height: 156px;
+            max-height: 156px;
+            align-items: center;
+        }
+
+        .item-card h4 {
+            font-size: 1.1rem;
+        }
+
+        .item-card h5 {
+            font-size: 1.05rem;
+            color: darkcyan;
+        }
+
+        .item-card img {
+            width: 132px;
+            height: 132px;
+            object-fit: cover;
+            border-radius: 0;
+            align-self: center;
+        }
+    </style>
+
+</head>
+
+<!-- Pode mudar os elementos e reorganizar a vontade. Só tem que manter a estrutura de divs pra funcionar. -->
+<body>
+
+    <!-- Título do Menu - Usar %title% onde o título será escrito -->
+    <div class="title">
+        <h1>%title%</h1>
+    </div>
+    <!-- Adicionei a classe title para poder manipular no  -->
+
+    <!-- Container dos itens (lista de itens) -->
+    <!-- Esse elemento não pode ter seu conteúdo nem sua tag alterada, só pode ter separadores e item-cards dentro de si.
+    Mesmo se alterado, não fará diferença. Você pode fazer alterações em seu estilo. -->
+    <div class="item-list">
+
+        <!-- Separador de Categoria - Precisa ter uma classe com nome "separator". -->
+        <div class="separator">
+            <h3>%categoryName%</h3>
+        </div>
+
+        <!-- Separador de Sub-Categoria - Precisa ter uma classe com nome "sub-separator". -->
+        <div class="sub-separator">
+            <h4>%categoryName%</h4>
+        </div>
+
+        <!-- Card dos itens, da classe item-card. %item_name%, %item_description%, %item_price%, %item_image%
+        para, respectivamente, nome, descrição, preço e imagem -->
+        <div class="item-card">
+            <div> <!-- Esse div serve para separar a imagem dos textos, não é necessário na estrutura -->
+                <h4>%name%</h4>
+                <p>%description%</p>
+                <h5>%price%</h5>
+            </div>
+            <img src="%image%">
+        </div>
+
+    </div>
+</body>
+</html>
+

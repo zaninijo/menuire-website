@@ -1,0 +1,47 @@
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.type-select {
+    z-index: 2;
+}
+
+.errorbox {
+    z-index: 3;
+}
+
+.separator {
+    position: relative;
+}
+
+.sub-separator {
+    position: relative;
+}
+
+.item-card {
+    position: relative;
+}
+
+.title {
+    position: relative;
+}
+
+.edit-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    background-color: rgba(255, 255, 255, 0.623);
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    text-align: center;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menuire</title>
+    <script type="module" src="src/user-page.ts"></script>
+    <link rel="stylesheet" href="css/user-page.css">
+</head>
+<body>
+    <button id="log-off">Sair</button>
+    <h3>Bem-vindo ao Menuire</h3>
+    <div class="menu-creation-box">
+        <p>Criar um novo menu:</p>
+        Nome: <input id="new-menu-title" type="text" maxlength="32">
+        Tema: <select id="theme-selector"></select>
+        <button id="create-new-menu">Criar</button>
+        <p id="creation-error-output" style="display: none;"></p>
+    </div>
+    
+    <p>Lista de menus:</p>
+    <div class="menu-list">
+        <p id="empty-message" style="display: none;">Parece que você não tem menus. Que tal criar um novo?</p>
+        <div class="menu-card" style="display: none;">
+            <span class="menu-title"></span>
+            <button class="edit-menu">Editar o menu</button>
+            <button class="delete-menu">Deletar o menu</button>
+        </div>
+    </div>
+
+    <div class="modal confirm">
+        <p>Você tem certeza que deseja fazer isso?</p>
+        <div>
+            <button class="confirm">Sim</button> <button class="cancel">Não</button>
+        </div>
+    </div>
+</body>
+</html>

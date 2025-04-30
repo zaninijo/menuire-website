@@ -1,0 +1,8 @@
+{
+    "home": "/",
+    "login": "/login-page.html",
+    "register": "/register-page.html",
+    "dashboard": "/user-page.html",
+    "menuEditor": "/menu-editor.html",
+    "theme-catalog": "/theme-catalog.html"
+}

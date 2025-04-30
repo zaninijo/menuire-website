@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menuire</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script type="module">
+        // coloquei aqui dentro o código da página pq é só isso mesmo.
+        import route from "./routes.json"
+        window.addEventListener("DOMContentLoaded", () => {
+            const gotoLogin = document.querySelector("#goto-login");
+            gotoLogin.href = route.login;
+            const gotoRegister = document.querySelector("#goto-register");
+            gotoRegister.href = route.register;
+        });
+    </script>
+</head>
+<body>
+    <h1>Bem vindo ao Menuire!</h1>
+    <a id="goto-login" href="login-page.html">Entrar</a>
+    <a id="goto-register" href="register-page.html">Criar conta</a>
+</body>
+</html>

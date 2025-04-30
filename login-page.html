@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menuire Login</title>
+    <script type="module" src="src/login-page.ts"></script>
+    <link rel="stylesheet" href="css/login-page.css">
+</head>
+<body>
+    <button onclick="window.location.href = '/'">Voltar</button>
+    <div>
+        <input id="email-input" placeholder="E-mail" type="email" autocomplete="email">
+        <input id="password-input" placeholder="Senha" type="password" autocomplete="current-password">
+    </div>
+    <p id="error-message"></p>
+    <div class="chk-box-container">
+        <input type="checkbox" id="show-password"> <p>Mostrar senha</p>
+    </div>
+    <div class="chk-box-container">
+        <input id="keep-connected" type="checkbox"> <p>Continuar conectado?</p>
+    </div>
+    <button id="submit-login">Entrar</button>
+</body>
+</html>
