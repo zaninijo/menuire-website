@@ -123,8 +123,17 @@ class EditableMenu {
         const elementType = element.classList[0] as MenuElementTypes;
 
         if (!parent.classList.contains("item-list")) return null;
+        let elementTypeQuery: string = ""
 
-        const itemArray = Array.from(parent.getElementsByClassName!(elementType!));
+        switch(elementType) {
+            case "item-card": elementTypeQuery = ".item-card"; break;
+            case "separator":
+            case "sub-separator": elementTypeQuery = ".separator, .sub-separator"; break;
+            case "title": break;
+            default: break;
+        }
+
+        const itemArray = Array.from(parent.querySelectorAll(elementTypeQuery));
         return itemArray.indexOf(element);
     }
 
@@ -134,22 +143,22 @@ class EditableMenu {
     element2MenuData(element: Element) {
         const parent = element.parentElement!;
         const elementType = element.classList[0] as MenuElementTypes
-
-        let elementTypeQuery: MenuElementTypes[] = [elementType]
-
+        
         if (!elementType || !parent.classList.contains("item-list")) return null;
 
-        let keyName: MenuDataKeys
+        let elementTypeQuery: string = "";
+        let keyName: MenuDataKeys;
         
         switch(elementType) {
-            case "item-card": keyName = "items"; break;
+            case "item-card": keyName = "items"; elementTypeQuery = ".item-card"; break;
             case "separator":
-            case "sub-separator": keyName = "separators"; elementTypeQuery = ["separator", "sub-separator"]; break;
+            case "sub-separator": keyName = "separators"; elementTypeQuery = ".separator, .sub-separator"; break;
             case "title": keyName = "title"; break;
             default: break;
         }
-        
-        const itemArray = Array.from(parent.getElementsByClassName(elementTypeQuery.toString()));
+
+        const itemArray = Array.from(parent.querySelectorAll(elementTypeQuery));
+        console.log(itemArray.indexOf(element));
         return {type: elementType, index: itemArray.indexOf(element), itemArray: itemArray, keyName: keyName};
     }
 
@@ -168,15 +177,10 @@ class EditableMenu {
                 fragment = createItemCard(this.doc, elementData, imageB64, itemLayout);
                 break;
             }
-            case "separator": {
-                const itemLayout = this.menuTheme.separator;
-                dataArrayKey = "separators";
-                // @ts-expect-error
-                fragment = createSeparator(this.doc, elementData, itemLayout);
-                break;
-            }
+            case "separator":
             case "sub-separator": {
-                const itemLayout = this.menuTheme.subSeparator;
+                // @ts-expect-error
+                const itemLayout = elementData.sub ? this.menuTheme.subSeparator : this.menuTheme.separator;
                 dataArrayKey = "separators"
                 // @ts-expect-error
                 fragment = createSeparator(this.doc, elementData, itemLayout);
@@ -194,7 +198,7 @@ class EditableMenu {
         
         const childrenLength = this.itemContainer.children.length;
         const moveAmount = -(childrenLength - 2 - elementIndex)
-        const teste = this.moveElement(element, moveAmount);
+        this.moveElement(element, moveAmount);
 
         switch (elementType) {
             case "item-card": {
@@ -318,6 +322,15 @@ class EditableMenu {
 
         element.remove();
 
+        // Recarregar os positions dos separadores
+        const elementList = this.itemContainer;
+        const listElements = Array.from(elementList.children)
+        const separators = elementList.querySelectorAll(".separator, .sub-separator");
+
+        separators.forEach((separator, separatorIndex) => {
+            const elementIndex = listElements.indexOf(separator);
+            this.menuData.separators[separatorIndex].position = elementIndex;
+        })
     }
 
     async saveChanges() {
@@ -495,11 +508,12 @@ function openSeparatorEditBox(menu: EditableMenu, element: HTMLElement) {
     modal.style.display = 'block';
     showOverlay(Number.parseInt(modal.style.zIndex) - 1);
 
-    const separatorIndex = menu.element2MenuDataIndex(element)!
-    const separatorData = menu.menuData.separators[separatorIndex]
+    const separatorIndex = menu.element2MenuDataIndex(element)!;
+    const separatorData = menu.menuData.separators[separatorIndex];
     
     // Preenche os campos com os dados atuais (caso existam no elemento)
     nameInput.value = separatorData.categoryName;
+    subInput.checked = separatorData.sub;
 
     deleteButton.addEventListener("click", async () => {
         
@@ -518,8 +532,8 @@ function openSeparatorEditBox(menu: EditableMenu, element: HTMLElement) {
 
         const updatedData = {
             categoryName: nameInput.value.trim(),
-            sub: subInput.value == "on" ? true : false,
-            position: separatorIndex
+            position: separatorData.position,
+            sub: subInput.checked
         };
 
         // Sobrescreve o elemento com os dados novos.
