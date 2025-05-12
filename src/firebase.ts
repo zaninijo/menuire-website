@@ -11,7 +11,8 @@ import {
     User
 } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import route from '../routes.json'
+import route from '../routes.json';
+import placeholderImage from "../assets/placeholderImage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAv0feNbEpfUUj8JNwYBnSB_F5EiLxtTjM",
@@ -31,6 +32,11 @@ async function queryMenuImage(menuId: string, imageIdArray: string[]) {
     return await Promise.all(
         imageIdArray.map(async (imageId) => {
             try {
+
+                if (imageId === "placeholder") {
+                    return placeholderImage;
+                }
+
                 const imageDocRef = doc(db, "menuImage", menuId, "imageCollection", imageId);
                 const imageDocSnap = await getDoc(imageDocRef);
 

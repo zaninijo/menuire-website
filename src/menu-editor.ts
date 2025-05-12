@@ -172,6 +172,7 @@ class EditableMenu {
                 dataArrayKey = "items";
 
                 const itemData = elementData as MenuItemData;
+                
                 const imageB64 = (await queryMenuImage(this.menuData.id, [itemData.imageId]))[0];
                 // @ts-expect-error é ignorável porque ja sabemos que se é title retorna 
                 fragment = createItemCard(this.doc, elementData, imageB64, itemLayout);
@@ -460,7 +461,7 @@ function openItemEditBox(menu: EditableMenu, element: HTMLElement) {
         // Confere se o item que será modificado contém uma imagem. Se sim, deletar a imagem antiga.
         const oldImageId = menu.menuData.items[menu.element2MenuDataIndex(element)!].imageId
         const imageCount = imageInput.files?.length
-        if (oldImageId && imageCount) {
+        if (oldImageId && imageCount && oldImageId !== "placeholder") {
             deleteMenuItemImage(menu.menuId, oldImageId)
         }
 

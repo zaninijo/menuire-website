@@ -27,3 +27,8 @@ type ParsedTheme = {
     separator: string;
     subSeparator: string;
 }
+
+declare module '*.png' {
+  const value: string;
+  export default value;
+}
