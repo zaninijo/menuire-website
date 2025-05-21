@@ -3,7 +3,7 @@ import { queryMenuImage } from "./firebase";
 
 async function parseTheme(themeName: string) {
     try {
-        const response = await fetch(`./menu_layout/${themeName}.html`); // TODO precisa passar os temas pro back-end
+        const response = await fetch(`./assets/menu_layout/${themeName}.html`); // TODO precisa passar os temas pro back-end
         const html = await response.text();
 
         const parser = new DOMParser();

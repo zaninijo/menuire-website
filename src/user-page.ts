@@ -60,7 +60,7 @@ async function buildMenuList() {
     const menuList: MenuInfo[] = await response.json();
 
     if (menuList.length === 0) {
-        emptyMessage.style.display = "block"; // FIXME eu não sei se vai continuar sendo block. tomara que sim. talvez dá pra usar "initial" aqui
+        emptyMessage.style.display = "block";
         return
     }
 

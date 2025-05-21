@@ -1,9 +1,9 @@
 import imageCompression from "browser-image-compression";
 import route from '../routes.json'
-import themeList from "../menu_layout/theme_list.json"
+import themeList from "../assets/menu_layout/theme_list.json"
 
 // essa função faz a apuração dos erros nas requisições
-async function requestHandler(url: string|URL, params: RequestInit, errorCallback: (errorMessage: string) => void) {
+async function requestHandler(url: string|URL, params: RequestInit, errorCallback: (errorMessage: string) => void, supressedErrors: number[] = []) {
     url = url.toString();
     const response = await fetch(url, params);
     
@@ -11,7 +11,10 @@ async function requestHandler(url: string|URL, params: RequestInit, errorCallbac
 
     const errorMessage = await response.text();
     const status = response.status;
-    console.log(`${status}: ${errorMessage}`);
+    
+    if (status > 300 && status < 600 && supressedErrors.includes(status)) {
+        return response;
+    }
 
     if (status >= 500) {
         errorCallback("Houve um erro interno do servidor. Tente novamente mais tarde.");

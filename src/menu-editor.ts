@@ -14,12 +14,7 @@ import { getAuthHeader, queryMenuImage, waitUserAuth } from "./firebase";
 import QRCode from "qrcode"
 import route from "../routes.json"
 
-const { baseUrl: apiBaseUrl, timeout: apiTimeout } = apiConfig;
-
-// // Evita que os clicks se propaguem depois do primeiro listener.
-// document.addEventListener('click', function(event) {
-//     event.stopPropagation();
-// }, true);
+const { baseUrl: apiBaseUrl } = apiConfig;
 
 type MenuElementTypes = "item-card"|"separator"|"sub-separator"|"title"|undefined;
 type MenuDataTypes = MenuItemData|SeparatorData|string;
@@ -93,7 +88,7 @@ class EditableMenu {
 
     async generateQrCode() {
         // FIXME trocar pelo url do site dinâmico serviço 3
-        const qrCodeUrl = `HTTPS://URLDOSITE.COM/${this.menuData.title}`;
+        const qrCodeUrl = `HTTPS://URLDOSITE.COM/${encodeURIComponent(this.menuData.title)}`;
         const container = document.querySelector(".share-container")!;
         const qrCodeContainer = container.querySelector(".qr-code")! as HTMLCanvasElement;
         const downloadButton = container.querySelector(".download-qr")!;
@@ -144,7 +139,7 @@ class EditableMenu {
         const parent = element.parentElement!;
         const elementType = element.classList[0] as MenuElementTypes
         
-        if (!elementType || !parent.classList.contains("item-list")) return null;
+        if (!elementType || (!parent.classList.contains("item-list") && elementType !== "title")) return null;
 
         let elementTypeQuery: string = "";
         let keyName: MenuDataKeys;
@@ -153,7 +148,7 @@ class EditableMenu {
             case "item-card": keyName = "items"; elementTypeQuery = ".item-card"; break;
             case "separator":
             case "sub-separator": keyName = "separators"; elementTypeQuery = ".separator, .sub-separator"; break;
-            case "title": keyName = "title"; break;
+            case "title": return {type: elementType, index: 0, itemArray: [], keyName: "title"};
             default: break;
         }
 
@@ -163,7 +158,6 @@ class EditableMenu {
     }
 
     async addElement(elementType: MenuElementTypes, elementIndex: number, elementData: MenuDataTypes) {
-
         let dataArrayKey: MenuDataArrayKeys;
         let fragment: DocumentFragment;
         switch(elementType) {
@@ -226,7 +220,7 @@ class EditableMenu {
     }
 
     async editElement(element: Element, data: MenuDataTypes) {
-        const { type: elementType, index: dataIndex } = this.element2MenuData(element)!;
+        const { type: elementType } = this.element2MenuData(element)!;
 
         if (elementType == "title") {
             const titleName = data as string; 
@@ -234,23 +228,23 @@ class EditableMenu {
             if (titleName === this.menuData.title) return true;
 
             const titleOverlap = await requestHandler(
-                `${apiBaseUrl}/match-route/${titleName}`,
+                `${apiBaseUrl}/match-route/${encodeURIComponent(titleName)}`,
                 { method: "GET" },
-                () => {}
+                () => {},
+                [404]
             );
 
             if (titleOverlap.status == 200) {
                 openErrorBox("Já existe um menu com o mesmo título!");
                 return false
             }
-
             this.menuData.title = titleName;
-            this.menuData.route = titleName;
-            element.innerHTML = titleName;
+            await this.saveChanges();
+            window.location.reload();
             return true
         }
 
-        try {            
+        try {
             const parent = element.parentElement!;
     
             const children = Array.from(parent.children);
@@ -444,6 +438,21 @@ function openItemEditBox(menu: EditableMenu, element: HTMLElement) {
     descInput.value = itemData.description;
     priceInput.value = itemData.price.toString();
 
+    priceInput.addEventListener("input", () => {
+        let valor = priceInput.value.replace(/[^\d,.]/g, "");
+
+        valor = valor.replace(".", ",");
+
+        const partes = valor.split(",");
+        if (partes.length > 1) {
+            partes[1] = partes[1].slice(0, 2); // Máximo 2 dígitos depois do ponto
+            valor = partes[0] + "," + partes[1];
+        }
+
+        priceInput.value = valor;
+    })
+
+
     deleteButton.addEventListener("click", async () => {
 
         // Espera confirmação do usuário
@@ -478,7 +487,7 @@ function openItemEditBox(menu: EditableMenu, element: HTMLElement) {
         const updatedData = {
             name: nameInput.value.trim(),
             description: descInput.value.trim(),
-            price: parseFloat(priceInput.value),
+            price: parseFloat(priceInput.value.replace(",", ".")),
             imageId: newImageId
         };
 
@@ -550,6 +559,7 @@ function openSeparatorEditBox(menu: EditableMenu, element: HTMLElement) {
     });
 }
 
+// FIXME reescrever o nome do menu não funciona.
 function openTitleEditBox(menu: EditableMenu, element: HTMLElement) {
     const modal = document.querySelector('.modal.editbox.title-editbox') as HTMLElement;
     const titleInput = modal.querySelector('.title') as HTMLInputElement;
